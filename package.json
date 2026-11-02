@@ -1,0 +1,17 @@
+{
+  "name": "petshop",
+  "version": "0.1.0",
+  "description": "Night Shift's target service: a small pet shop API the crew works on",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

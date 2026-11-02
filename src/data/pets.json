@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "Tama", "species": "cat" },
+  { "id": 2, "name": "Bruno", "species": "dog" },
+  { "id": 3, "name": "Nibbles", "species": "hamster" },
+  { "id": 4, "name": "Kip", "species": "canary" },
+  { "id": 5, "name": "Sarah", "species": "cat" },
+  { "id": 6, "name": "Grover", "species": "dog" },
+  { "id": 7, "name": "Pixel", "species": "gecko" }
+]
