@@ -63,6 +63,34 @@ test("POST /pets creates a pet with the next id", async () => {
   assert.ok(list.items.some((p) => p.name === "Momo"));
 });
 
+test("POST /pets validates empty name and long name", async () => {
+  const emptyRes = await fetch(`${base}/pets`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ name: "", species: "cat" }),
+  });
+  assert.equal(emptyRes.status, 400);
+  assert.deepEqual(await emptyRes.json(), { error: "invalid_name" });
+
+  const longRes = await fetch(`${base}/pets`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ name: "a".repeat(33), species: "cat" }),
+  });
+  assert.equal(longRes.status, 400);
+  assert.deepEqual(await longRes.json(), { error: "invalid_name" });
+});
+
+test("POST /pets validates unknown species", async () => {
+  const res = await fetch(`${base}/pets`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ name: "Goldie", species: "dragon" }),
+  });
+  assert.equal(res.status, 400);
+  assert.deepEqual(await res.json(), { error: "invalid_species" });
+});
+
 test("GET /pets?page=1&limit=3 returns exactly the first three", async () => {
   const response = await fetch(`${base}/pets?page=1&limit=3`);
   const body = await response.json();

@@ -4,6 +4,8 @@ import { paginate } from "../pagination.js";
 
 export const petsRouter = express.Router();
 
+const ALLOWED_SPECIES = new Set(["cat", "dog", "hamster", "canary", "gecko", "axolotl"]);
+
 petsRouter.get("/", (req, res) => {
   const all = getPets();
   const page = Number.parseInt(req.query.page ?? "1", 10);
@@ -21,10 +23,20 @@ petsRouter.get("/:id", (req, res, next) => {
 });
 
 petsRouter.post("/", (req, res) => {
+  const name = typeof req.body?.name === "string" ? req.body.name.trim() : "";
+  if (!name || name.length > 32) {
+    return res.status(400).json({ error: "invalid_name" });
+  }
+
+  const species = req.body?.species;
+  if (!species || !ALLOWED_SPECIES.has(species)) {
+    return res.status(400).json({ error: "invalid_species" });
+  }
+
   const pet = {
     id: listIdsMax() + 1,
-    name: req.body?.name,
-    species: req.body?.species,
+    name,
+    species,
   };
   addPet(pet);
   res.status(201).json(pet);
