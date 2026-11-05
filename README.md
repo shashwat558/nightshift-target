@@ -15,6 +15,7 @@ npm start         # listens on PORT, default 3001
 ## Endpoints
 
 - `GET /health` — `{status:"ok"}`
+- `GET /version` — `{service:"petshop", version:"0.1.0"}`
 - `GET /pets?limit=&page=` — seeded list, 7 pets, pagination metadata
 - `GET /pets/:id` — one pet (missing ids currently 500 — BACKLOG-2's domain)
 - `POST /pets` `{name, species}` — create (unvalidated — BACKLOG-1's domain)
