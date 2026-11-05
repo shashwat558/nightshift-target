@@ -6,6 +6,7 @@ import { initStore } from "../src/store.js";
 test("GET /stats reports pet count and uptime", async () => {
   await initStore();
   const server = createApp().listen(0, "127.0.0.1");
+  await new Promise(resolve => server.once("listening", resolve));
   try {
     const url = `http://127.0.0.1:${server.address().port}/stats`;
     const response = await fetch(url);
