@@ -110,3 +110,9 @@ test("unknown routes are a plain 404", async () => {
   assert.equal(response.status, 404);
   assert.equal(body.error, "not_found");
 });
+
+ test("GET /pets/:id returns JSON 404 for a missing id", async () => {
+  const response = await fetch(`${base}/pets/999999`);
+  assert.equal(response.status, 404);
+  assert.deepEqual(await response.json(), { error: "not_found", id: "999999" });
+});

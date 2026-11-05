@@ -13,11 +13,11 @@ petsRouter.get("/", (req, res) => {
   res.json(paginate(all, page, limit));
 });
 
-petsRouter.get("/:id", (req, res, next) => {
+petsRouter.get("/:id", (req, res) => {
   const id = Number.parseInt(req.params.id, 10);
   const pet = getPet(Number.isNaN(id) ? -1 : id);
   if (!pet) {
-    return next(new Error(`pet with id ${req.params.id} not found`));
+    return res.status(404).json({ error: "not_found", id: req.params.id });
   }
   res.json(pet);
 });
